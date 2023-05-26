@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_22_181438) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_153353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_181438) do
     t.string "full_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "book_orders", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_orders_on_book_id"
+    t.index ["order_id"], name: "index_book_orders_on_order_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -34,6 +43,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_181438) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "date_submited"
+    t.float "subtotal"
+    t.float "shipping"
+    t.integer "status"
+    t.bigint "user_id", null: false
+    t.float "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.boolean "is_available", default: false, null: false
+    t.integer "ratings"
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_reviews_on_book_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -58,6 +92,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_181438) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "book_orders", "books"
+  add_foreign_key "book_orders", "orders"
   add_foreign_key "books", "authors"
   add_foreign_key "books", "suppliers"
+  add_foreign_key "orders", "users"
+  add_foreign_key "reviews", "books"
+  add_foreign_key "reviews", "users"
 end
