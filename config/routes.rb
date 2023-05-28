@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'current_user', to: 'current_user#index'
-  get 'all_users', to: 'current_user#all_users'
+  
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',
@@ -10,4 +9,11 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+  namespace :api do
+    namespace :v1 do
+      resources :current_user, only: %i[index]    
+    end  
+  end 
+  
 end
