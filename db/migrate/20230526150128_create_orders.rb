@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.datetime :date_submited
       t.float :subtotal
       t.float :shipping
-      t.integer :status
+      t.integer :status, default: 0, null: false
       t.references :user, null: false, foreign_key: true
       t.float :total
 

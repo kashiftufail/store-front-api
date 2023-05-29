@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :orders, dependent: :destroy       
 
+  enum :role_type, { customer: 0, admin: 1 }, suffix: true
+
 end
