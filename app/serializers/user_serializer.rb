@@ -6,6 +6,7 @@ class UserSerializer
     user.created_at && user.created_at.strftime('%m/%d/%Y')
   end
 
+  has_one :profile
   has_many :reviews
   has_many :orders      
 
