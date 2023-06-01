@@ -53,7 +53,11 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 4000 }
+  Rails.application.configure do
+    routes.default_url_options[:host] = 'localhost:3000'
+  end
+
+  config.action_mailer.default_url_options = { host: 'http://localhost.com:3000'}
 
 
   # Raises error for missing translations.
