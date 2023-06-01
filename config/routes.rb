@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[index show]    
       resources :authors, only: %i[index show create update destroy]    
       resources :profile, only: %i[show create update]    
+      resources :reviews, only: %i[show create]    
     end  
   end 
   
