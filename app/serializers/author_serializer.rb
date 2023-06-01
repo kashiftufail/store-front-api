@@ -7,5 +7,4 @@ class AuthorSerializer
   end
 
   has_many :books
-
 end

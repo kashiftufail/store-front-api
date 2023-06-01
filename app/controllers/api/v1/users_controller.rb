@@ -1,7 +1,8 @@
 class Api::V1::UsersController < ApplicationController  
   
-  def index    
-    render json: UserSerializer.new(User.all).serializable_hash.to_json
+  def index
+    users = User.includes(:orders, :reviews, :profile)       
+    render json: UserSerializer.new(users).serializable_hash.to_json
   end 
 
   def show
