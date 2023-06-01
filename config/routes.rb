@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: %i[index show]    
-      resources :authors, only: %i[index show create update destroy]    
+      resources :authors, only: %i[index show create update destroy]  
+      resources :books, only: %i[index show create update destroy]    
       resources :profile, only: %i[show create update]    
       resources :reviews, only: %i[show create]    
     end  
