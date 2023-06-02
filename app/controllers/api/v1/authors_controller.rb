@@ -1,8 +1,6 @@
 class Api::V1::AuthorsController < ApplicationController
-  
+  include CheckAdmin
   before_action :set_author, only: [:update, :show, :destroy]
-  before_action :check_admin, only: [:create, :update, :destroy]
-
   
   def index
     all_authors
@@ -16,9 +14,7 @@ class Api::V1::AuthorsController < ApplicationController
     else
       render json: @author.errors, status: :unprocessable_entity
     end
-  end
-
-  def edit; end
+  end  
   
   def show
     render json: searlizer_json(@author)    
@@ -42,10 +38,6 @@ class Api::V1::AuthorsController < ApplicationController
   end  
   
   private
-
-  def check_admin
-    return render json: {message: 'not allowed.'} unless current_user.admin_role_type?
-  end
 
   def all_authors
     authors = Author.includes(:books)

@@ -1,6 +1,6 @@
 class Api::V1::BooksController < ApplicationController  
-  before_action :set_book, only: [:update, :show, :destroy]
-  before_action :check_admin, only: [:create, :update, :destroy]
+  include CheckAdmin
+  before_action :set_book, only: [:update, :show, :destroy]  
   
   def index
     all_books
@@ -38,10 +38,6 @@ class Api::V1::BooksController < ApplicationController
   end  
   
   private
-
-  def check_admin
-    return render json: {message: 'not allowed.'} unless current_user.admin_role_type?
-  end
 
   def all_books
     books = Book.includes(:author , :supplier)
