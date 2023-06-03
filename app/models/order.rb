@@ -4,4 +4,21 @@ class Order < ApplicationRecord
   has_many :books, through: :book_orders
 
   enum :status, { being_packaged: 0, shipped: 1, complete: 2, canceled: 3 }, suffix: true
+
+  def self.put_order(*args)
+    books = Book.where(id: args[1]) 
+    
+    if books.present?
+      subtotal = books.map(&:price).sum 
+      shipping = 0 # todo make it accordingly currently 0
+      total = subtotal + shipping      
+      order = Order.create(total: total, subtotal: subtotal, 
+                        shipping: shipping, user_id: args[0])                       
+      order.books << books
+    else       
+      return 
+    end
+    
+    order
+  end
 end
