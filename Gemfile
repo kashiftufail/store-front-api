@@ -52,3 +52,5 @@ end
 
 gem 'pry'
 
+
+gem "stripe", "~> 8.5"
