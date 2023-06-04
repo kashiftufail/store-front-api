@@ -3,12 +3,12 @@ module StripeHandle
     Stripe::Customer.create(email: email,description: description)
   end
 
-  def self.create_charge(customer_id:, amount:, description:)
+  def self.create_charge(customer_id:, amount:, description:, currency: 'usd')
     Stripe::Charge.create(
       customer: customer_id,
       amount: amount,
       description: description,
-      currency: 'usd'
+      currency: currency
     )
   end
 
@@ -22,8 +22,6 @@ module StripeHandle
       }
     )
   end  
-
-  # c = 
-
-
 end
+
+
