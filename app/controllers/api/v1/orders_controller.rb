@@ -1,9 +1,14 @@
 class Api::V1::OrdersController < ApplicationController
   
-  def index
+  def index  
     orders = Order.includes(:books, :user)
     render json: OrderSerializer.new(orders).serializable_hash.to_json
   end
+
+  def create_token
+    source = User.attach_card_to_stripe_customer(current_user.stripe_customer_id, params[:order])  
+    render json: source
+  end  
 
   def show
     order = Order.find(params[:id])
@@ -24,3 +29,6 @@ class Api::V1::OrdersController < ApplicationController
     end         
   end    
 end
+
+
+
