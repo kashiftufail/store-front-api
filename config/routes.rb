@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     namespace :v1 do      
       resources :authors, only: %i[index show create update destroy]  
       resources :books, only: %i[index show create update destroy]    
-      resources :orders, only: %i[index show create] 
+      resources :orders, only: %i[index show create] do
+        collection do
+          post :create_token
+        end  
+      end   
       resources :profile, only: %i[show create update]    
       resources :reviews, only: %i[show create]    
       resources :suppliers, only: %i[index show create update destroy] 
