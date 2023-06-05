@@ -12,8 +12,11 @@ class Order < ApplicationRecord
       subtotal = books.map(&:price).sum 
       shipping = 0 # todo make it accordingly currently 0
       total = subtotal + shipping      
+      total_c =  StripeHandle.dollars_to_cents(total)
       order = Order.create(total: total, subtotal: subtotal, 
                         shipping: shipping, user_id: args[0])                       
+      StripeHandle.create_charge(customer_id: args[2], amount: total_c, 
+                                 description:'any words', currency: 'usd')                  
       order.books << books
     else       
       return 
@@ -21,4 +24,5 @@ class Order < ApplicationRecord
     
     order
   end
+  
 end

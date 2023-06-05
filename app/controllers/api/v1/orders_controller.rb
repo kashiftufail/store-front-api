@@ -21,7 +21,8 @@ class Api::V1::OrdersController < ApplicationController
 
   def create        
     if params[:order][:book_ids].present?     
-      order = Order.put_order(current_user.id, params[:order][:book_ids])     
+      order = Order.put_order(current_user.id, params[:order][:book_ids], 
+                              current_user.stripe_customer_id)     
       order.present? ? (render json: OrderSerializer.new(order).serializable_hash.to_json) : 
                        (render json: {message: "couldn't find book with these ids"})                       
     else
